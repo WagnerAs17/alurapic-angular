@@ -1,0 +1,67 @@
+<div class="container mt-5 pt-4" (submit)="upload()">
+    <form [formGroup]="uploadForm" class="row">
+      <div class="col-md-6 text-center">
+        <div class="form-group" *ngIf="!preview;else showPreview">
+            <button immediateClick type="button" (click)="fileInput.click()" class="btn btn-primary">
+                <i class="fa fa-image fa-4x align-middle"></i>
+            </button>
+            <input
+                #fileInput
+                hidden 
+                formControlName="file" 
+                type="file" accept="image/*" 
+                (change)="handleFile($event.target.files[0])">
+            <app-validatorMsg 
+                *ngIf="uploadForm.get('file').errors?.required" 
+                text="Please, select photo">
+            </app-validatorMsg>
+        </div>
+      </div>
+      <ng-template #showPreview>
+          <app-photo [url]="preview" text="prewiew">
+
+          </app-photo>
+      </ng-template>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <textarea 
+            formControlName="description"
+            class="form-control form-control-sm" 
+            placeholder="photo description"></textarea>
+            <app-validatorMsg 
+                *ngIf="uploadForm.get('description').errors?.required" 
+                text="Description is required">
+            </app-validatorMsg>
+
+            <app-validatorMsg 
+                *ngIf="uploadForm.get('description').errors?.maxlength" 
+                text="Max length is 300 caracters">
+            </app-validatorMsg>
+        </div>
+  
+        <div class="form-group">
+          <label class="text-muted">
+            Allow comments
+            <input formControlName="allowComments" type="checkbox">
+            <app-validatorMsg 
+                *ngIf="uploadForm.get('allowComments').errors?.required">
+            </app-validatorMsg>
+          </label>
+        </div>
+        <div *ngIf="!percenteDone; else uploadProgress ">
+          <button [disabled]="uploadForm.invalid" type="submit" class="btn btn-primary btn-block">
+            Upload
+          </button>
+    
+          <a [routerLink]="['']" class="btn btn-secondary btn-block">Cancel</a>
+        </div>
+
+        <ng-template #uploadProgress>
+          <div class="text-center display-4">
+            uploading {{percenteDone}} %
+          </div>
+        </ng-template>
+      </div>
+    </form>
+  </div>

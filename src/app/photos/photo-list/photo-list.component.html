@@ -1,0 +1,12 @@
+
+<app-search (onTyping)="filter = $event" [value]="filter">
+
+</app-search>
+
+<!-- Conceito de inbound properties -->
+<app-photos [photos]="photos | filterByDescription: filter"></app-photos>
+
+<app-load-button 
+    (click)="load()" 
+    [hasMore]="hasMore">
+</app-load-button>

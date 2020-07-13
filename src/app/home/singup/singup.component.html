@@ -1,0 +1,86 @@
+<h4 class="text-center mt-5"> Register to embrace a new world!</h4>
+
+<form #form="ngForm" [formGroup]="singupGroup" class="form mt-4" (submit)="signUp()">
+    <div class="form-group">
+        <input #inputEmail formControlName="email" placeholder="email" class="form-control" autofocus>
+
+        <app-validatorMsg 
+            *ngIf="singupGroup.get('email').errors?.required && (form.submitted || singupGroup.get('email').touched)" 
+            text="E-mail is required">
+        </app-validatorMsg>
+        
+        <app-validatorMsg 
+            *ngIf="singupGroup.get('email').errors?.email" 
+            text="Invalid e-mail">
+        </app-validatorMsg>
+    </div>
+
+    <div class="form-group">
+        <input formControlName="fullName" placeholder="full name" class="form-control">
+
+        <app-validatorMsg 
+            *ngIf="singupGroup.get('fullName').errors?.required && form.submitted" 
+            text="Password is required">
+        </app-validatorMsg>
+        <app-validatorMsg 
+            *ngIf="singupGroup.get('fullName').errors?.minlength" 
+            text="Min length 2 caracters">
+        </app-validatorMsg>
+        <app-validatorMsg 
+            *ngIf="singupGroup.get('fullName').errors?.maxlength" 
+            text="Max length 40 caracters">
+        </app-validatorMsg>
+    </div>
+
+    <div class="form-group">
+        <input formControlName="userName" placeholder="user name" class="form-control">
+        <app-validatorMsg 
+            *ngIf="singupGroup.get('userName').errors?.required && form.submitted" 
+            text="User name is required">
+        </app-validatorMsg>
+
+        <app-validatorMsg 
+            *ngIf="singupGroup.get('userName').errors?.minlength" 
+            text="Min legth 2 caracters">
+        </app-validatorMsg>
+        
+        <app-validatorMsg 
+            *ngIf="singupGroup.get('userName').errors?.maxlength" 
+            text="Max legth 30 caracters">
+        </app-validatorMsg>
+        <app-validatorMsg 
+            *ngIf="singupGroup.get('userName').errors?.lowerCase" 
+            text="Must be lower case">
+        </app-validatorMsg>
+        <app-validatorMsg
+            *ngIf="singupGroup.get('userName').errors?.userNameTaken"
+            text="Username already taken">
+        </app-validatorMsg>
+        <small *ngIf="singupGroup.get('userName').valid" class="text-success">User available</small>
+    </div>
+
+    <div class="form-group">
+        <input formControlName="password" type="password" placeholder="password" class="form-control">
+        <app-validatorMsg 
+            *ngIf="singupGroup.get('password').errors?.required && form.submitted" 
+            text="Password is required">
+        </app-validatorMsg>
+        <app-validatorMsg 
+            *ngIf="singupGroup.get('password').errors?.minlength" 
+            text="Min legth 8 caracters">
+        </app-validatorMsg>
+        <app-validatorMsg 
+            *ngIf="singupGroup.get('password').errors?.maxlength" 
+            text="Max legth 14 caracters">
+        </app-validatorMsg>
+
+        <app-validatorMsg 
+            *ngIf="singupGroup.errors?.userNamePassword" 
+            text="User name must be different password">
+        </app-validatorMsg> 
+    </div>
+
+    <button class="btn btn-primary btn-block">Register</button>
+
+    <p>Already a user?<a [routerLink]="['']">Sign In!</a></p>
+</form>
